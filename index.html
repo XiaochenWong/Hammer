@@ -1,0 +1,118 @@
+  <!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>banner</title>
+  <link rel="stylesheet" href="banner.css">
+ </head>
+ <body>
+	<h1></h1>
+		<div id="banner" class="">
+			<ul class="banner-img">
+				<li>
+					<img src="img/pro211.png">
+					<img src="img/pro222.png">
+					<img src="img/pro233.png">
+				</li>
+				<li>
+					<img src="img/Fchanghuxi11.png">
+					<img src="img/Fchanghuxi22.png">
+					<img src="img/Fchanghuxi33.png">
+				</li>
+				<li>
+					<img src="img/ertongkouzhao1.png">
+					<img src="img/ertongkouzhao2.png">
+					<img src="img/ertongkouzhao3.png">
+				</li>
+				<li>
+					<img src="img/5001.png">
+					<img src="img/5002.png">
+					<img src="img/5003.png">
+				</li>	
+				<li>
+					<img src="img/pro211.png">
+					<img src="img/pro222.png">
+					<img src="img/pro233.png">
+				</li>
+			</ul>
+			<ul class="indicators" id = "indicators" data-load="bannerInds">
+				<li class="hover"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+		  </ul>
+
+	</div>
+	<script src="jquery-3.2.1.js"></script>
+	<script>
+		//carousel
+		var i=0;
+		var LIWIDTH = 1220;
+		var $banner = $(".banner-img");
+		var timer = null;
+		function move(){
+			timer = setTimeout(()=>{
+				if(i<4){
+					$banner.css("transition","all 0.5s linear");
+					i++;
+					$banner.css("left",-LIWIDTH*i);
+					if(i<4){
+						$("#indicators>li:eq("+i+")").addClass("hover").siblings().removeClass("hover");
+					}else{
+						$("#indicators>li:eq("+0+")").addClass("hover").siblings().removeClass("hover");
+					}
+					move();
+				}else{
+					$banner.css("transition","");
+					$banner.css("left",0);
+					setTimeout(()=>{
+						$banner.css("transition","all 0.5s linear");
+						i=1;
+						$banner.css("left",-LIWIDTH*i);
+						$("#indicators>li:eq("+i+")").addClass("hover").siblings().removeClass("hover");
+					},50);
+					move();
+				}
+			},4000);
+		}
+		move();
+		$(".indicators").on("click","li",function(){
+			var $this=$(this);
+			i=$this.index();
+			$banner.css("left",-LIWIDTH*i);
+			$("#indicators>li:eq("+i+")").addClass("hover").siblings().removeClass("hover");
+		})
+		//3d
+		$("#banner").on("mousemove", function(e){
+			var x = e.offsetX;
+			var y = e.offsetY;
+			var centerX = $("#banner").outerWidth()/2;
+			var centerY = $("#banner").outerHeight()/2;
+			var percentX = (x-centerX)/centerX;
+			var percentY = (y-centerY)/centerY;
+			console.log(percentX,percentY);
+			var deg = 10;
+			$("#banner").css({
+				transform:"rotateX("+8*-percentY+'deg)'+' rotateY('+6*percentX+'deg)'
+			});
+			$("#banner>ul>li>img:eq(1)").css({
+				transition:"",
+				transform:"translate("+3*percentX+"px,"+0.6*-percentY+"px)"
+			});
+			$("#banner>ul>li>img:last-child").css({
+				transition:"",
+				transform:"translate("+5*percentX+"px,"+1*percentY+"px)"
+			});
+		});
+		$('#bannner').on('mouseout', function(){
+			$('#banner').css({
+			translate: ""
+		})
+  })
+	</script>
+ </body>
+</html>
