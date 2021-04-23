@@ -36,5 +36,5 @@ jobs:
         with:
           host: todday.withwings.top
           user: root
-          key: ${{ secrets.sshP }}
+          key: ${{ secrets.SSHP }}
           first_ssh: touch /root/helloGHaction
